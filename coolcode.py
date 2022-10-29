@@ -1,3 +1,4 @@
+from tkinter import *
 import string as s
 alphabets = s.ascii_uppercase + s.ascii_lowercase
 alphabets2 = "ZAYBXCWDVEUFTGSHRIQJPKOLNMzaybxcwdveuftgshriqjpkolnm"
@@ -5,12 +6,12 @@ numbers = "0123456789"
 special_cirectors = """./\π#~<>,¬`!£$^%&*()-=_+[]{}:;@'\" ?|"""
 v1 = alphabets + numbers + special_cirectors
 v2 = alphabets2 + numbers + special_cirectors
+ss = ("sans-serif", 16)
 
 is_activated = False
 
 dict2 = {}
 dict1 = {}
-
 
 def push_to_dict(text, dict_name):
     for i in text:
@@ -39,11 +40,14 @@ def encode(text):
                 res = res + "99"
             elif i == '\t':
                 res = res + "98"
+            elif i == '\r':
+                res = res + "97"
             else:
                 res = res + dict1[i]
         return res
     else:
         print("Please activate first to use COOLCODE.")
+        
 def decode(code):
     if is_activated:
         turn = False
@@ -60,6 +64,9 @@ def decode(code):
                 elif cc == "98":
                     res = res + '\t'
                     turn = False
+                elif cc == "97":
+                    res = res + '\r'
+                    turn = False
                 else:
                     res = res + dict2[cc]
                     turn = False
@@ -70,6 +77,10 @@ def decode(code):
         return res
     else:
         print("Please activate first to use COOLCODE.")
+
+def read_file(name):
+    with open(name, 'r', encoding='utf-8') as file:
+        return file.read()
 
 def write_file(name, text):
     with open(name, 'w') as file:
